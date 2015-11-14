@@ -4,6 +4,8 @@ import           Data.List
 import qualified Data.Map      as Map
 import qualified Data.Set      as Set
 
+import Geometry.Sphere
+
 removeLowerCase xs = [x | x<- xs, x `elem` ['A' .. 'Z']]
 
 factorial n = product [1..n]
