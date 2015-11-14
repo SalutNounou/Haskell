@@ -31,7 +31,7 @@ addVectors'::(Num a)=>(a,a)->(a,a)->(a,a)
 addVectors' (x,y) (u,v) = (x+u, y+v)
 
 head':: [a]->a
-head' []=error "Can't return head of an emty list, dummmy!"
+head' []=error "Can't return head of an empty list, dummmy!"
 head' (x:xs)=x
 
 
@@ -49,19 +49,19 @@ bmiTell weight height
     | otherwise ="You're a fat bastard"
     where bmi = weight/ height^2
           (skinny,regular,fat) = (18.5,25,30)
-          
+
 
 
 max' :: (Ord a)=>a->a->a
-max' a b 
+max' a b
      |a>b =a
      | otherwise = b
 
 
 compare' ::(Ord a)=>a->a-> Ordering
-compare' x y 
-       |x<y =LT 
-       |x>y = GT 
+compare' x y
+       |x<y =LT
+       |x>y = GT
        |otherwise = EQ
 
 
@@ -117,7 +117,7 @@ sumOddSquares = sum(takeWhile (<10000)(filter odd (map (^2) [1..])))
 
 chaine::(Integral a)=>a->[a]
 chaine 1 = [1]
-chaine x 
+chaine x
 	| odd x = x : chaine(3 * x + 1)
 	| otherwise = x : chaine (x `div` 2)
 
@@ -144,7 +144,7 @@ productFold::(Num a)=>[a]->a
 productFold = foldl1(\acc x -> acc * x)
 
 filterFold::(a->Bool)->[a]->[a]
-filterFold f  = foldr(\y acc-> if(f y ) then y:acc else acc)[] 
+filterFold f  = foldr(\y acc-> if(f y ) then y:acc else acc)[]
 
 headFold::[a]->a
 headFold = foldr1(\x acc-> x)
@@ -154,10 +154,3 @@ lastFold = foldl1(\acc x->x)
 
 search::(Eq a)=>[a]->[a]->Bool
 search  x xs = let xlen = length x in foldl (\acc y-> (take xlen y == x )||acc) False (tails xs)
-
-
-
-    
-
-
-
