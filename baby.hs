@@ -1,4 +1,8 @@
-import Data.List
+import           Data.Char
+import           Data.Function
+import           Data.List
+import qualified Data.Map      as Map
+import qualified Data.Set      as Set
 
 removeLowerCase xs = [x | x<- xs, x `elem` ['A' .. 'Z']]
 
@@ -96,7 +100,7 @@ myLength xs = sum [1| _<-xs]
 myReverse :: [a]->[a]
 myReverse [] = []
 myReverse [x] = [x]
-myReverse (x:xs) =  (myReverse xs ) ++ [x]
+myReverse (x:xs) =  myReverse xs  ++ [x]
 
 isPalindrome :: (Eq a)=> [a]->Bool
 isPalindrome [] = True
@@ -154,3 +158,50 @@ lastFold = foldl1(\acc x->x)
 
 search::(Eq a)=>[a]->[a]->Bool
 search  x xs = let xlen = length x in foldl (\acc y-> (take xlen y == x )||acc) False (tails xs)
+
+myWords::String->[String]
+myWords  = filter (not . any isSpace) . groupBy((==) `on` isSpace)
+
+
+myEncode::Int->String->String
+myEncode offSet = map ( chr . (+offSet) . ord)
+
+myDecode::Int->String->String
+myDecode offSet = myEncode (negate offSet)
+
+
+findKey::(Eq a)=>a->[(a,b)]->b
+findKey key  = snd . head . filter(\(k,v)->key==k)
+
+
+findKey'::(Eq a)=>a->[(a,b)]->Maybe b
+findKey' _ [] = Nothing
+findKey' key ((k,v):xs) = if k==key then Just v else findKey' key xs
+
+
+findKey''::(Eq a)=>a->[(a,b)]->Maybe b
+findKey'' key = foldl(\acc (k,v)-> if k==key then Just v else acc) Nothing
+
+createMyMap =Map.fromList [("betty","555-2938"),("bonnie","452-2928"),("lucille","205-2928")]
+
+myFromList::(Ord k)=>[(k,v)]->Map.Map k v
+myFromList  = foldr(\(k,v) acc -> Map.insert k v acc) Map.empty
+
+phoneBookToMap::(Ord k)=>[(k,a)]->Map.Map k [a]
+phoneBookToMap  = Map.fromListWith (++) . map(\ (x,y) -> (x,[y]))
+
+text1 = "I just had an anime dream. Anime... Reality... Are they so different?"
+text2 = "The old man left his garbage can out and now his trash is all over my lawn!"
+
+phoneBook =
+        [("betty","555-2938")
+        ,("betty","342-2492")
+        ,("bonnie","452-2928")
+        ,("patsy","493-2928")
+        ,("patsy","943-2929")
+        ,("patsy","827-9162")
+        ,("lucille","205-2928")
+        ,("wendy","939-8282")
+        ,("penny","853-2492")
+        ,("penny","555-2111")
+        ]
